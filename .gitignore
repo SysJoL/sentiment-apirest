@@ -1,0 +1,25 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/
+mvnw
+mvnw.cmd
+
+# IntelliJ / IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Otros
+pruebas.sh
+test_api.sh
