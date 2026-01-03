@@ -10,10 +10,15 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                // El "*" en allowedOriginPatterns permite localhost y cualquier URL de Render
-                .allowedOriginPatterns("*")
+                // Agregamos localhost con IP por si acaso y el wildcard de Render
+                .allowedOriginPatterns(
+                        "http://localhost:4200",
+                        "http://127.0.0.1:4200",
+                        "https://*.onrender.com"
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(3600); // Cache de la configuración por 1 hora
     }
 }
