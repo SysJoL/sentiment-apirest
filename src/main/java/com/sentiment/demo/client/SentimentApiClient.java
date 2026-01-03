@@ -2,18 +2,21 @@ package com.sentiment.demo.client;
 
 import com.sentiment.demo.dto.SentimentRequest;
 import com.sentiment.demo.dto.SentimentResponse;
+import org.springframework.beans.factory.annotation.Value; // Importante
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-
 @Component
 public class SentimentApiClient {
 
-    private static final String FASTAPI_URL = "http://localhost:8000/sentiment";
+    // Ahora leemos la URL desde las propiedades
+    private final String fastapiUrl;
     private final RestTemplate restTemplate;
 
-    public SentimentApiClient() {
+    // Inyectamos el valor a través del constructor o directamente en el campo
+    public SentimentApiClient(@Value("${python.api.url}") String fastapiUrl) {
+        this.fastapiUrl = fastapiUrl;
         this.restTemplate = new RestTemplate();
     }
 
@@ -23,8 +26,9 @@ public class SentimentApiClient {
 
         HttpEntity<SentimentRequest> entity = new HttpEntity<>(request, headers);
 
+        // Usamos la variable 'fastapiUrl' que viene de Render o Local
         ResponseEntity<SentimentResponse> response = restTemplate.exchange(
-                FASTAPI_URL,
+                fastapiUrl,
                 HttpMethod.POST,
                 entity,
                 SentimentResponse.class
